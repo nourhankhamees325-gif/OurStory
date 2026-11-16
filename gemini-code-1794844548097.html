@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Story — Shared Sanctuary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #13090d;
+      --bg-velvet: #1e0e14;
+      --card-bg: rgba(38, 18, 26, 0.85);
+      --card-border: rgba(235, 179, 169, 0.22);
+      --rose-gold: #ebb3a9;
+      --rose-accent: #d97b84;
+      --candle-glow: #f5cfa0;
+      --text-main: #fdf4f2;
+      --text-muted: #c7a6aa;
+      --danger: #e06c75;
+      --success: #8ab893;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background: radial-gradient(circle at top center, #2b111b 0%, #13090d 75%);
+      background-color: #13090d;
+      color: #fdf4f2;
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, .serif {
+      font-family: 'Cormorant Garamond', Georgia, serif;
+    }
+
+    .ambient-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.35;
+    }
+    .orb-1 {
+      width: 340px;
+      height: 340px;
+      background: #8e2c48;
+      top: -80px;
+      left: -60px;
+    }
+    .orb-2 {
+      width: 300px;
+      height: 300px;
+      background: #b57b56;
+      bottom: -60px;
+      right: -40px;
+    }
+
+    .fullscreen-overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, #260f18 0%, #0f0609 100%);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+
+    .fullscreen-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .lock-card {
+      background: rgba(38, 18, 26, 0.9);
+      border: 1px solid rgba(235, 179, 169, 0.25);
+      backdrop-filter: blur(18px);
+      padding: 40px 28px;
+      border-radius: 28px;
+      max-width: 380px;
+      width: 100%;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65);
+    }
+
+    .lock-icon {
+      font-size: 2.4rem;
+      margin-bottom: 12px;
+      display: inline-block;
+      animation: pulseGlow 3s infinite ease-in-out;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.07); }
+    }
+
+    .input-field, .textarea-field {
+      width: 100%;
+      background: rgba(15, 6, 10, 0.75);
+      border: 1px solid rgba(235, 179, 169, 0.25);
+      color: #fdf4f2;
+      padding: 13px 16px;
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: 0.95rem;
+      outline: none;
+    }
+
+    .input-field:focus, .textarea-field:focus {
+      border-color: #ebb3a9;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #c76574 0%, #9c3d4f 100%);
+      color: #fff;
+      border: none;
+      padding: 13px 24px;
+      border-radius: 14px;
+      font-weight: 600;
+      font-size: 0.95rem;
+      cursor: pointer;
+      box-shadow: 0 8px 22px rgba(156, 61, 79, 0.38);
+    }
+
+    .btn-primary:hover {
+      opacity: 0.94;
+    }
+
+    .btn-secondary {
+      background: rgba(235, 179, 169, 0.14);
+      color: #ebb3a9;
+      border: 1px solid rgba(235, 179, 169, 0.25);
+      padding: 10px 18px;
+      border-radius: 12px;
+      font-weight: 500;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    #whispers-screen {
+      cursor: pointer;
+      overflow: hidden;
+    }
+
+    .whisper-bubble {
+      position: absolute;
+      background: rgba(235, 179, 169, 0.12);
+      border: 1px solid rgba(235, 179, 169, 0.25);
+      padding: 10px 18px;
+      border-radius: 999px;
+      color: #ebb3a9;
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.15rem;
+      white-space: nowrap;
+      pointer-events: none;
+      animation: floatUp linear infinite;
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(105vh) scale(0.95); opacity: 0; }
+      15% { opacity: 0.9; }
+      85% { opacity: 0.9; }
+      100% { transform: translateY(-15vh) scale(1.05); opacity: 0; }
+    }
+
+    .tap-hint {
+      position: relative;
+      z-index: 2;
+      background: rgba(19, 9, 13, 0.82);
+      border: 1px solid rgba(235, 179, 169, 0.25);
+      padding: 28px 34px;
+      border-radius: 26px;
+      max-width: 420px;
+    }
+
+    .app-container {
+      position: relative;
+      z-index: 1;
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 24px 18px 80px;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 26px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid rgba(235, 179, 169, 0.2);
+    }
+
+    .brand-title {
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: #ebb3a9;
+      cursor: pointer;
+    }
+
+    .identity-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(38, 18, 26, 0.85);
+      border: 1px solid rgba(235, 179, 169, 0.25);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.85rem;
+      color: #f5cfa0;
+      cursor: pointer;
+    }
+
+    .page-section {
+      display: none;
+    }
+
+    .page-section.active {
+      display: block;
+    }
+
+    .love-letter {
+      background: linear-gradient(165deg, rgba(46, 20, 30, 0.92) 0%, rgba(27, 12, 18, 0.96) 100%);
+      border: 1px solid rgba(245, 207, 160, 0.28);
+      border-radius: 26px;
+      padding: 34px 28px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      margin-bottom: 28px;
+    }
+
+    .wax-seal {
+      width: 48px;
+      height: 48px;
+      background: radial-gradient(circle at 30% 30%, #d45b6e, #7d2232);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 16px;
+      border: 2px solid rgba(245, 207, 160, 0.35);
+    }
+
+    .letter-chapter {
+      padding: 16px 0;
+      border-bottom: 1px dashed rgba(235, 179, 169, 0.18);
+    }
+
+    .letter-chapter:last-child {
+      border-bottom: none;
+    }
+
+    .chapter-meta {
+      font-size: 0.8rem;
+      color: #f5cfa0;
+      margin-bottom: 4px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .chapter-title {
+      font-size: 1.35rem;
+      color: #ebb3a9;
+      margin-bottom: 6px;
+    }
+
+    .chapter-body {
+      color: #fdf4f2;
+      font-size: 0.98rem;
+      white-space: pre-line;
+    }
+
+    .nav-directory {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .nav-item {
+      background: rgba(38, 18, 26, 0.85);
+      border: 1px solid rgba(235, 179, 169, 0.22);
+      padding: 18px 22px;
+      border-radius: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    .nav-item:hover {
+      border-color: #ebb3a9;
+      background: rgba(54, 24, 36, 0.9);
+    }
+
+    .nav-item-left {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .nav-icon {
+      font-size: 1.5rem;
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      background: rgba(235, 179, 169, 0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+
+    .back-btn {
+      background: rgba(38, 18, 26, 0.85);
+      border: 1px solid rgba(235, 179, 169, 0.25);
+      color: #ebb3a9;
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+
+    .rose-sanctuary {
+      background: rgba(38, 18, 26, 0.85);
+      border: 1px solid rgba(235, 179, 169, 0.25);
+      border-radius: 24px;
+      padding: 32px 24px;
+      text-align: center;
+    }
+
+    .rose-stage-visual {
+      font-size: 5rem;
+      margin: 16px 0;
+      display: inline-block;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      max-width: 320px;
+      height: 10px;
+      background: rgba(15, 6, 10, 0.75);
+      border-radius: 999px;
+      margin: 16px auto;
+      overflow: hidden;
+      border: 1px solid rgba(235, 179, 169, 0.25);
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #8ab893, #ebb3a9);
+      width: 10%;
+      transition: width 0.5s ease;
+    }
+
+    .cards-stack {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 20px;
+    }
+
+    .memory-card {
+      background: rgba(38, 18, 26, 0.85);
+      border: 1px solid rgba(235, 179, 169, 0.22);
+      border-radius: 20px;
+      padding: 20px;
+    }
+
+    .memory-card img {
+      width: 100%;
+      max-height: 360px;
+      object-fit: cover;
+      border-radius: 14px;
+      margin-top: 12px;
+    }
+
+    .memory-card audio {
+      width: 100%;
+      margin-top: 12px;
+      height: 40px;
+    }
+
+    .badge {
+      display: inline-block;
+      padding: 3px 10px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      background: rgba(245, 207, 160, 0.16);
+      color: #f5cfa0;
+    }
+
+    .delete-btn {
+      background: transparent;
+      border: none;
+      color: #c7a6aa;
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+    .delete-btn:hover { color: #e06c75; }
+
+    .form-box {
+      background: rgba(38, 18, 26, 0.85);
+      border: 1px solid rgba(235, 179, 169, 0.22);
+      border-radius: 20px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .record-controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .sync-status {
+      font-size: 0.75rem;
+      color: #8ab893;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="ambient-orb orb-1"></div>
+  <div class="ambient-orb orb-2"></div>
+
+  <!-- 1. PASSWORD SCREEN -->
+  <div id="password-screen" class="fullscreen-overlay">
+    <div class="lock-card">
+      <div class="lock-icon">🕯️</div>
+      <h1 class="serif" style="font-size: 2rem; color: #ebb3a9; margin-bottom: 6px;">Our Story</h1>
+      <p style="color: #c7a6aa; font-size: 0.9rem; margin-bottom: 22px;">Enter our secret date to unlock our private sanctuary</p>
+      <input type="password" id="pass-input" class="input-field" placeholder="Secret passcode..." style="text-align: center; letter-spacing: 3px; margin-bottom: 14px;" />
+      <button type="button" onclick="checkPassword()" class="btn-primary" style="width: 100%;">Unlock Sanctuary</button>
+      <p id="pass-error" style="color: #e06c75; font-size: 0.85rem; margin-top: 10px; display: none;">Incorrect passcode, my love.</p>
+    </div>
+  </div>
+
+  <!-- 2. FLOATING WHISPERS SPLASH SCREEN -->
+  <div id="whispers-screen" class="fullscreen-overlay hidden" onclick="enterSanctuary()">
+    <div id="whispers-container"></div>
+    <div class="tap-hint">
+      <div style="font-size: 1.8rem; margin-bottom: 8px;">✨🌹✨</div>
+      <h2 class="serif" style="font-size: 1.9rem; color: #ebb3a9; margin-bottom: 8px;">Every moment with you is my favorite chapter</h2>
+      <p style="color: #f5cfa0; font-size: 0.9rem;">Tap anywhere on the screen to open our story</p>
+    </div>
+  </div>
+
+  <!-- 3. MAIN APPLICATION -->
+  <div class="app-container">
+    <div class="top-bar">
+      <div>
+        <div class="brand-title serif" onclick="navigateTo('home')">Our Story</div>
+        <div class="sync-status" id="sync-indicator">● Connecting to Cloud...</div>
+      </div>
+      <div class="identity-pill" onclick="navigateTo('settings')">
+        <span id="current-user-badge">Writing as: Her 🌷</span>
+        <span style="opacity: 0.6;">✎</span>
+      </div>
+    </div>
+
+    <!-- PAGE 1: HOME (LOVE LETTER + DIRECTORY LIST) -->
+    <section id="page-home" class="page-section active">
+      <div class="love-letter">
+        <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+          <div class="wax-seal">💌</div>
+          <button type="button" class="btn-secondary" onclick="toggleAddChapter()">+ Add Chapter</button>
+        </div>
+        <h2 class="serif" style="font-size: 1.85rem; color: #f5cfa0; margin-bottom: 4px;">To My Forever Favorite Person,</h2>
+        <p style="color: #c7a6aa; font-size: 0.9rem; margin-bottom: 18px;">A living letter of how we began, where we are, and everywhere we're going.</p>
+
+        <div id="add-chapter-box" class="form-box" style="display: none; margin-bottom: 20px;">
+          <input type="text" id="chapter-title-input" class="input-field" placeholder="Chapter title (e.g., The Day Everything Changed)" />
+          <textarea id="chapter-body-input" class="textarea-field" rows="4" placeholder="Write this part of our story..."></textarea>
+          <div style="display: flex; gap: 10px; justify-content: flex-end;">
+            <button type="button" class="btn-secondary" onclick="toggleAddChapter()">Cancel</button>
+            <button type="button" class="btn-primary" onclick="saveChapter()">Save to Letter</button>
+          </div>
+        </div>
+
+        <div id="story-chapters-list">
+          <p style="color: #c7a6aa; font-style: italic;">Loading our letter...</p>
+        </div>
+      </div>
+
+      <h3 class="serif" style="font-size: 1.4rem; color: #ebb3a9; margin-bottom: 10px; padding-left: 4px;">Explore Our Sanctuary</h3>
+      <div class="nav-directory">
+        <div class="nav-item" onclick="navigateTo('rose')">
+          <div class="nav-item-left">
+            <div class="nav-icon">🌹</div>
+            <div>
+              <div style="font-weight: 600; color: #fdf4f2;">Our Growing Rose (Daily Streak)</div>
+              <div style="font-size: 0.83rem; color: #c7a6aa;" id="home-rose-preview">Nurture our flower every single day</div>
+            </div>
+          </div>
+          <span style="color: #ebb3a9;">→</span>
+        </div>
+
+        <div class="nav-item" onclick="navigateTo('special')">
+          <div class="nav-item-left">
+            <div class="nav-icon">✨</div>
+            <div>
+              <div style="font-weight: 600; color: #fdf4f2;">Special Memories</div>
+              <div style="font-size: 0.83rem; color: #c7a6aa;">Unforgettable milestones written in English</div>
+            </div>
+          </div>
+          <span style="color: #ebb3a9;">→</span>
+        </div>
+
+        <div class="nav-item" onclick="navigateTo('scrapbook')">
+          <div class="nav-item-left">
+            <div class="nav-icon">🎙️</div>
+            <div>
+              <div style="font-weight: 600; color: #fdf4f2;">Spontaneous & Candid Moments</div>
+              <div style="font-size: 0.83rem; color: #c7a6aa;">Photos, voice notes, and random chaos</div>
+            </div>
+          </div>
+          <span style="color: #ebb3a9;">→</span>
+        </div>
+
+        <div class="nav-item" onclick="navigateTo('settings')">
+          <div class="nav-item-left">
+            <div class="nav-icon">⚙️</div>
+            <div>
+              <div style="font-weight: 600; color: #fdf4f2;">Identity & Sanctuary Settings</div>
+              <div style="font-size: 0.83rem; color: #c7a6aa;">Switch between Her & Him</div>
+            </div>
+          </div>
+          <span style="color: #ebb3a9;">→</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- PAGE 2: OUR GROWING ROSE STREAK -->
+    <section id="page-rose" class="page-section">
+      <div class="section-header">
+        <button type="button" class="back-btn" onclick="navigateTo('home')">←</button>
+        <div>
+          <h2 class="serif" style="font-size: 1.7rem; color: #ebb3a9;">Our Growing Rose</h2>
+          <p style="font-size: 0.85rem; color: #c7a6aa;">Every day one of us adds a moment or waters it, our rose blooms brighter</p>
+        </div>
+      </div>
+
+      <div class="rose-sanctuary">
+        <span class="badge" id="rose-streak-badge">Day 0 Streak</span>
+        <div class="rose-stage-visual" id="rose-emoji">🌱</div>
+        <h3 class="serif" id="rose-stage-title" style="font-size: 1.6rem; color: #f5cfa0;">A Newly Planted Seed</h3>
+        <p id="rose-stage-desc" style="color: #c7a6aa; font-size: 0.92rem; max-width: 380px; margin: 8px auto;">
+          Just the beginning of something eternal. Water it today to keep our streak alive!
+        </p>
+
+        <div class="progress-bar-bg">
+          <div class="progress-bar-fill" id="rose-progress"></div>
+        </div>
+
+        <div style="margin-top: 20px;">
+          <button type="button" class="btn-primary" id="water-rose-btn" onclick="waterRose()">💧 Water Our Rose Today</button>
+        </div>
+        <p id="rose-last-watered" style="font-size: 0.8rem; color: #c7a6aa; margin-top: 14px;"></p>
+      </div>
+    </section>
+
+    <!-- PAGE 3: SPECIAL MEMORIES -->
+    <section id="page-special" class="page-section">
+      <div class="section-header">
+        <button type="button" class="back-btn" onclick="navigateTo('home')">←</button>
+        <div>
+          <h2 class="serif" style="font-size: 1.7rem; color: #ebb3a9;">Special Memories</h2>
+          <p style="font-size: 0.85rem; color: #c7a6aa;">Treasured milestones etched in time</p>
+        </div>
+      </div>
+
+      <div class="form-box">
+        <input type="text" id="special-title" class="input-field" placeholder="Memory Title (e.g., Under the Night Sky)" />
+        <input type="date" id="special-date" class="input-field" />
+        <textarea id="special-desc" class="textarea-field" rows="3" placeholder="Describe why this memory holds a special place in your heart..."></textarea>
+        <button type="button" class="btn-primary" onclick="addSpecialMemory()">Save Special Memory ✨</button>
+      </div>
+
+      <div id="special-memories-list" class="cards-stack"></div>
+    </section>
+
+    <!-- PAGE 4: SPONTANEOUS MOMENTS (PHOTOS & AUDIO) -->
+    <section id="page-scrapbook" class="page-section">
+      <div class="section-header">
+        <button type="button" class="back-btn" onclick="navigateTo('home')">←</button>
+        <div>
+          <h2 class="serif" style="font-size: 1.7rem; color: #ebb3a9;">Spontaneous & Candid</h2>
+          <p style="font-size: 0.85rem; color: #c7a6aa;">Photos, voice recordings, and sweet random moments</p>
+        </div>
+      </div>
+
+      <div class="form-box">
+        <textarea id="scrap-caption" class="textarea-field" rows="2" placeholder="Write a random thought, inside joke, or caption..."></textarea>
+        
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <label style="font-size: 0.85rem; color: #ebb3a9;">📸 Attach a Photo (Optional):</label>
+          <input type="file" id="scrap-photo" accept="image/*" class="input-field" style="padding: 9px;" />
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <label style="font-size: 0.85rem; color: #ebb3a9;">🎙️ Record a Voice Note (Optional):</label>
+          <div class="record-controls">
+            <button type="button" id="start-rec-btn" class="btn-secondary" onclick="startRecording()">● Start Recording</button>
+            <button type="button" id="stop-rec-btn" class="btn-secondary" onclick="stopRecording()" style="display: none; border-color: #e06c75; color: #e06c75;">■ Stop</button>
+            <span id="rec-status" style="font-size: 0.82rem; color: #c7a6aa;"></span>
+          </div>
+          <audio id="audio-preview" controls style="display: none; width: 100%; margin-top: 6px;"></audio>
+        </div>
+
+        <button type="button" class="btn-primary" id="post-scrap-btn" onclick="postScrapbookItem()">Share Moment 💌</button>
+      </div>
+
+      <div id="scrapbook-list" class="cards-stack"></div>
+    </section>
+
+    <!-- PAGE 5: SETTINGS (IDENTITY PERSISTENCE) -->
+    <section id="page-settings" class="page-section">
+      <div class="section-header">
+        <button type="button" class="back-btn" onclick="navigateTo('home')">←</button>
+        <div>
+          <h2 class="serif" style="font-size: 1.7rem; color: #ebb3a9;">Sanctuary Identity</h2>
+          <p style="font-size: 0.85rem; color: #c7a6aa;">Saved permanently on this device</p>
+        </div>
+      </div>
+
+      <div class="form-box">
+        <label style="font-size: 0.9rem; color: #f5cfa0;">Who is using this device?</label>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 6px;">
+          <button type="button" id="select-her-btn" class="btn-secondary" onclick="setIdentity('Her')" style="padding: 16px;">
+            🌷 Her
+          </button>
+          <button type="button" id="select-him-btn" class="btn-secondary" onclick="setIdentity('Him')" style="padding: 16px;">
+            🌿 Him
+          </button>
+        </div>
+        <p style="font-size: 0.82rem; color: #c7a6aa; margin-top: 10px;">
+          Your choice is remembered automatically even when you refresh the page. All memories are synced live via Firebase Cloud.
+        </p>
+      </div>
+    </section>
+  </div>
+
+  <script>
+    // ==========================================
+    // 1. DIRECT FIREBASE REST API (ZERO EXTERNAL SDK CRASHES)
+    // ==========================================
+    const DB_BASE = "https://our-story-59493-default-rtdb.firebaseio.com/our_story_sanctuary";
+    let cachedData = { chapters: {}, special_memories: {}, scrapbook: {}, rose: { streak: 0, lastDate: "" } };
+
+    async function fetchCloudData() {
+      try {
+        const res = await fetch(`${DB_BASE}.json`);
+        if (!res.ok) throw new Error("Cloud error");
+        const data = await res.json();
+        cachedData = data || { chapters: {}, special_memories: {}, scrapbook: {}, rose: { streak: 0, lastDate: "" } };
+        document.getElementById("sync-indicator").textContent = "● Live Cloud Synced";
+        document.getElementById("sync-indicator").style.color = "#8ab893";
+        renderAll();
+      } catch (e) {
+        document.getElementById("sync-indicator").textContent = "● Offline / Check Firebase Rules";
+        document.getElementById("sync-indicator").style.color = "#e06c75";
+      }
+    }
+
+    async function pushToCloud(path, payload) {
+      await fetch(`${DB_BASE}/${path}.json`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      await fetchCloudData();
+    }
+
+    async function putToCloud(path, payload) {
+      await fetch(`${DB_BASE}/${path}.json`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      await fetchCloudData();
+    }
+
+    async function deleteFromCloud(path) {
+      await fetch(`${DB_BASE}/${path}.json`, { method: "DELETE" });
+      await fetchCloudData();
+    }
+
+    // Auto-refresh every 5 seconds for real-time sync between devices
+    setInterval(fetchCloudData, 5000);
+
+    // ==========================================
+    // 2. PERSISTENT IDENTITY & PASSCODE
+    // ==========================================
+    const SECRET_PASS = "1532026";
+    let currentIdentity = localStorage.getItem("our_story_identity") || "Her";
+
+    function updateIdentityUI() {
+      const badge = document.getElementById("current-user-badge");
+      badge.textContent = currentIdentity === "Her" ? "Writing as: Her 🌷" : "Writing as: Him 🌿";
+
+      const herBtn = document.getElementById("select-her-btn");
+      const himBtn = document.getElementById("select-him-btn");
+      if (currentIdentity === "Her") {
+        herBtn.style.borderColor = "#ebb3a9";
+        herBtn.style.background = "rgba(235, 179, 169, 0.28)";
+        himBtn.style.borderColor = "rgba(235, 179, 169, 0.25)";
+        himBtn.style.background = "rgba(235, 179, 169, 0.1)";
+      } else {
+        himBtn.style.borderColor = "#ebb3a9";
+        himBtn.style.background = "rgba(235, 179, 169, 0.28)";
+        herBtn.style.borderColor = "rgba(235, 179, 169, 0.25)";
+        herBtn.style.background = "rgba(235, 179, 169, 0.1)";
+      }
+    }
+
+    function setIdentity(role) {
+      currentIdentity = role;
+      localStorage.setItem("our_story_identity", role);
+      updateIdentityUI();
+    }
+
+    if (sessionStorage.getItem("our_story_unlocked") === "true") {
+      document.getElementById("password-screen").classList.add("hidden");
+    }
+
+    function checkPassword() {
+      const val = document.getElementById("pass-input").value.trim();
+      if (val === SECRET_PASS) {
+        sessionStorage.setItem("our_story_unlocked", "true");
+        document.getElementById("password-screen").classList.add("hidden");
+        showWhispersSplash();
+      } else {
+        document.getElementById("pass-error").style.display = "block";
+      }
+    }
+
+    document.getElementById("pass-input").addEventListener("keypress", function (e) {
+      if (e.key === "Enter") checkPassword();
+    });
+
+    // ==========================================
+    // 3. FLOATING WHISPERS SPLASH
+    // ==========================================
+    const whispersList = [
+      "You are my favorite place to be ✨",
+      "Every love story is beautiful, but ours is my favorite 🌹",
+      "In a sea of people, my eyes will always search for you 💫",
+      "Forever starts with every little moment we share 🕯️",
+      "My heart feels at home whenever I'm with you 💌",
+      "Counting every day, every laugh, every memory together 🌙"
+    ];
+
+    function showWhispersSplash() {
+      const screen = document.getElementById("whispers-screen");
+      const container = document.getElementById("whispers-container");
+      container.innerHTML = "";
+      screen.classList.remove("hidden");
+
+      whispersList.forEach((text, i) => {
+        const bubble = document.createElement("div");
+        bubble.className = "whisper-bubble";
+        bubble.textContent = text;
+        bubble.style.left = (8 + (i * 15) % 72) + "%";
+        bubble.style.animationDuration = (9 + (i % 4) * 2) + "s";
+        bubble.style.animationDelay = (i * 0.9) + "s";
+        container.appendChild(bubble);
+      });
+    }
+
+    function enterSanctuary() {
+      document.getElementById("whispers-screen").classList.add("hidden");
+    }
+
+    // ==========================================
+    // 4. MULTI-PAGE NAVIGATION
+    // ==========================================
+    function navigateTo(pageId) {
+      document.querySelectorAll(".page-section").forEach(sec => sec.classList.remove("active"));
+      document.getElementById("page-" + pageId).classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    // ==========================================
+    // 5. RENDER ALL SECTIONS
+    // ==========================================
+    function renderAll() {
+      renderChapters();
+      renderRose();
+      renderSpecialMemories();
+      renderScrapbook();
+    }
+
+    function renderChapters() {
+      const container = document.getElementById("story-chapters-list");
+      const data = cachedData.chapters;
+      if (!data || Object.keys(data).length === 0) {
+        container.innerHTML = `
+          <div class="letter-chapter">
+            <div class="chapter-meta"><span>Chapter I</span><span>Written with love</span></div>
+            <h3 class="chapter-title serif">Where Our Story Begins</h3>
+            <p class="chapter-body">Click "+ Add Chapter" above to write the first page of our story together. Every word you write here is saved forever and appears instantly for both of us.</p>
+          </div>
+        `;
+        return;
+      }
+
+      const entries = Object.entries(data).sort((a, b) => a[1].timestamp - b[1].timestamp);
+      container.innerHTML = entries.map(([id, item], idx) => `
+        <div class="letter-chapter">
+          <div class="chapter-meta">
+            <span>Part ${idx + 1} • By ${item.author}</span>
+            <button type="button" class="delete-btn" onclick="deleteItem('chapters/${id}')">✕</button>
+          </div>
+          <h3 class="chapter-title serif">${escapeHTML(item.title)}</h3>
+          <p class="chapter-body">${escapeHTML(item.body)}</p>
+        </div>
+      `).join("");
+    }
+
+    function toggleAddChapter() {
+      const box = document.getElementById("add-chapter-box");
+      box.style.display = box.style.display === "none" ? "flex" : "none";
+    }
+
+    async function saveChapter() {
+      const title = document.getElementById("chapter-title-input").value.trim();
+      const body = document.getElementById("chapter-body-input").value.trim();
+      if (!title || !body) return;
+
+      await pushToCloud("chapters", {
+        title,
+        body,
+        author: currentIdentity,
+        timestamp: Date.now()
+      });
+
+      await autoNurtureStreak();
+      document.getElementById("chapter-title-input").value = "";
+      document.getElementById("chapter-body-input").value = "";
+      toggleAddChapter();
+    }
+
+    async function deleteItem(path) {
+      if (confirm("Remove this entry?")) {
+        await deleteFromCloud(path);
+      }
+    }
+
+    // ==========================================
+    // 6. GROWING ROSE STREAK
+    // ==========================================
+    const roseStages = [
+      { min: 0, emoji: "🌱", title: "A Newly Planted Seed", desc: "Planted with love. Water it every day to watch it grow!" },
+      { min: 3, emoji: "🌿", title: "Tender Green Sprout", desc: "Our daily care is bringing life and warmth to our little rose." },
+      { min: 7, emoji: "🌷", title: "A Blossoming Rosebud", desc: "A full week of love! The petals are starting to show their color." },
+      { min: 14, emoji: "🌹", title: "Radiant Velvet Rose", desc: "Two weeks strong! Deeply rooted and blooming beautifully." },
+      { min: 30, emoji: "💐", title: "Eternal Enchanted Garden", desc: "A thriving symbol of our devotion that never fades." }
+    ];
+
+    function getTodayStr() {
+      return new Date().toISOString().split("T")[0];
+    }
+
+    async function autoNurtureStreak() {
+      const today = getTodayStr();
+      const data = cachedData.rose || { streak: 0, lastDate: "" };
+      if (data.lastDate !== today) {
+        const newStreak = (data.streak || 0) + 1;
+        await putToCloud("rose", {
+          streak: newStreak,
+          lastDate: today,
+          wateredBy: currentIdentity
+        });
+      }
+    }
+
+    async function waterRose() {
+      const today = getTodayStr();
+      const data = cachedData.rose || { streak: 0, lastDate: "" };
+      if (data.lastDate === today) {
+        alert("Our rose has already been watered today! Come back tomorrow to keep growing it 🌹");
+        return;
+      }
+      const newStreak = (data.streak || 0) + 1;
+      await putToCloud("rose", {
+        streak: newStreak,
+        lastDate: today,
+        wateredBy: currentIdentity
+      });
+    }
+
+    function renderRose() {
+      const data = cachedData.rose || { streak: 0, lastDate: "" };
+      const streak = data.streak || 0;
+      let currentStage = roseStages[0];
+      for (const st of roseStages) {
+        if (streak >= st.min) currentStage = st;
+      }
+
+      document.getElementById("rose-streak-badge").textContent = `Day ${streak} Streak`;
+      document.getElementById("rose-emoji").textContent = currentStage.emoji;
+      document.getElementById("rose-stage-title").textContent = currentStage.title;
+      document.getElementById("rose-stage-desc").textContent = currentStage.desc;
+      document.getElementById("home-rose-preview").textContent = `${currentStage.emoji} Day ${streak} — ${currentStage.title}`;
+
+      const pct = Math.min(100, Math.max(8, (streak / 30) * 100));
+      document.getElementById("rose-progress").style.width = pct + "%";
+
+      const today = getTodayStr();
+      const btn = document.getElementById("water-rose-btn");
+      if (data.lastDate === today) {
+        btn.textContent = "✨ Watered Today";
+        document.getElementById("rose-last-watered").textContent = `Last watered today by ${data.wateredBy || "Love"}`;
+      } else {
+        btn.textContent = "💧 Water Our Rose Today";
+        document.getElementById("rose-last-watered").textContent = data.lastDate ? `Last watered on ${data.lastDate}` : "Not watered yet today";
+      }
+    }
+
+    // ==========================================
+    // 7. SPECIAL MEMORIES
+    // ==========================================
+    async function addSpecialMemory() {
+      const title = document.getElementById("special-title").value.trim();
+      const date = document.getElementById("special-date").value;
+      const desc = document.getElementById("special-desc").value.trim();
+      if (!title || !desc) return;
+
+      await pushToCloud("special_memories", {
+        title,
+        date: date || getTodayStr(),
+        desc,
+        author: currentIdentity,
+        timestamp: Date.now()
+      });
+
+      await autoNurtureStreak();
+      document.getElementById("special-title").value = "";
+      document.getElementById("special-desc").value = "";
+    }
+
+    function renderSpecialMemories() {
+      const list = document.getElementById("special-memories-list");
+      const data = cachedData.special_memories;
+      if (!data || Object.keys(data).length === 0) {
+        list.innerHTML = `<p style="color: #c7a6aa; text-align: center; padding: 20px;">No special memories added yet. Add your first milestone above!</p>`;
+        return;
+      }
+
+      const items = Object.entries(data).sort((a, b) => b[1].timestamp - a[1].timestamp);
+      list.innerHTML = items.map(([id, m]) => `
+        <div class="memory-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span class="badge">✨ ${escapeHTML(m.date)} • By ${m.author}</span>
+            <button type="button" class="delete-btn" onclick="deleteItem('special_memories/${id}')">✕</button>
+          </div>
+          <h3 class="serif" style="font-size: 1.45rem; color: #ebb3a9; margin-bottom: 6px;">${escapeHTML(m.title)}</h3>
+          <p style="color: #fdf4f2; font-size: 0.95rem; white-space: pre-line;">${escapeHTML(m.desc)}</p>
+        </div>
+      `).join("");
+    }
+
+    // ==========================================
+    // 8. SPONTANEOUS MOMENTS (PHOTOS & AUDIO)
+    // ==========================================
+    let mediaRecorder;
+    let audioChunks = [];
+    let recordedAudioBase64 = null;
+
+    async function startRecording() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = [];
+        recordedAudioBase64 = null;
+
+        mediaRecorder.ondataavailable = (e) => {
+          if (e.data.size > 0) audioChunks.push(e.data);
+        };
+
+        mediaRecorder.onstop = () => {
+          const blob = new Blob(audioChunks, { type: "audio/webm" });
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            recordedAudioBase64 = reader.result;
+            const preview = document.getElementById("audio-preview");
+            preview.src = recordedAudioBase64;
+            preview.style.display = "block";
+          };
+          reader.readAsDataURL(blob);
+          stream.getTracks().forEach(t => t.stop());
+        };
+
+        mediaRecorder.start();
+        document.getElementById("start-rec-btn").style.display = "none";
+        document.getElementById("stop-rec-btn").style.display = "inline-block";
+        document.getElementById("rec-status").textContent = "🔴 Recording...";
+      } catch (err) {
+        alert("Microphone permission is needed to record voice notes.");
+      }
+    }
+
+    function stopRecording() {
+      if (mediaRecorder && mediaRecorder.state !== "inactive") {
+        mediaRecorder.stop();
+        document.getElementById("start-rec-btn").style.display = "inline-block";
+        document.getElementById("stop-rec-btn").style.display = "none";
+        document.getElementById("rec-status").textContent = "Voice note ready ✓";
+      }
+    }
+
+    function compressImage(file) {
+      return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const img = new Image();
+          img.onload = () => {
+            const canvas = document.createElement("canvas");
+            const MAX_W = 850;
+            const scale = Math.min(1, MAX_W / img.width);
+            canvas.width = img.width * scale;
+            canvas.height = img.height * scale;
+            const ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+            resolve(canvas.toDataURL("image/jpeg", 0.75));
+          };
+          img.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      });
+    }
+
+    async function postScrapbookItem() {
+      const caption = document.getElementById("scrap-caption").value.trim();
+      const photoFile = document.getElementById("scrap-photo").files[0];
+      if (!caption && !photoFile && !recordedAudioBase64) return;
+
+      const btn = document.getElementById("post-scrap-btn");
+      btn.textContent = "Uploading...";
+      btn.disabled = true;
+
+      let photoBase64 = null;
+      if (photoFile) {
+        photoBase64 = await compressImage(photoFile);
+      }
+
+      await pushToCloud("scrapbook", {
+        caption,
+        photo: photoBase64,
+        audio: recordedAudioBase64,
+        author: currentIdentity,
+        dateStr: new Date().toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+        timestamp: Date.now()
+      });
+
+      await autoNurtureStreak();
+      document.getElementById("scrap-caption").value = "";
+      document.getElementById("scrap-photo").value = "";
+      recordedAudioBase64 = null;
+      document.getElementById("audio-preview").style.display = "none";
+      document.getElementById("rec-status").textContent = "";
+      btn.textContent = "Share Moment 💌";
+      btn.disabled = false;
+    }
+
+    function renderScrapbook() {
+      const list = document.getElementById("scrapbook-list");
+      const data = cachedData.scrapbook;
+      if (!data || Object.keys(data).length === 0) {
+        list.innerHTML = `<p style="color: #c7a6aa; text-align: center; padding: 20px;">No candid moments yet. Drop a photo, voice note, or random thought above!</p>`;
+        return;
+      }
+
+      const items = Object.entries(data).sort((a, b) => b[1].timestamp - a[1].timestamp);
+      list.innerHTML = items.map(([id, item]) => `
+        <div class="memory-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+            <span class="badge">${item.author === "Her" ? "🌷 Her" : "🌿 Him"} • ${item.dateStr || ""}</span>
+            <button type="button" class="delete-btn" onclick="deleteItem('scrapbook/${id}')">✕</button>
+          </div>
+          ${item.caption ? `<p style="color: #fdf4f2; font-size: 0.96rem; white-space: pre-line;">${escapeHTML(item.caption)}</p>` : ""}
+          ${item.photo ? `<img src="${item.photo}" alt="Shared moment" loading="lazy" />` : ""}
+          ${item.audio ? `<audio controls src="${item.audio}"></audio>` : ""}
+        </div>
+      `).join("");
+    }
+
+    function escapeHTML(str) {
+      if (!str) return "";
+      return str.replace(/[&<>"']/g, (m) => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"
+      }[m]));
+    }
+
+    // Start app immediately
+    updateIdentityUI();
+    fetchCloudData();
+  </script>
+</body>
+</html>
