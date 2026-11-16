@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Our Story — Shared Sanctuary</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-deep: #13090d;
+      --bg-velvet: #1e0e14;
+      --card-bg: rgba(38, 18, 26, 0.78);
+      --card-border: rgba(235, 179, 169, 0.18);
+      --rose-gold: #ebb3a9;
+      --rose-accent: #d97b84;
+      --candle-glow: #f5cfa0;
+      --text-main: #fdf4f2;
+      --text-muted: #c7a6aa;
+      --danger: #e06c75;
+      --success: #8ab893;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: radial-gradient(circle at top center, #2b111b 0%, var(--bg-deep) 75%);
+      color: var(--text-main);
+      min-height: 100vh;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    h1, h2, h3, .serif {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    /* Ambient Glow */
+    .ambient-orb {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.35;
+    }
+    .orb-1 {
+      width: 340px;
+      height: 340px;
+      background: #8e2c48;
+      top: -80px;
+      left: -60px;
+    }
+    .orb-2 {
+      width: 300px;
+      height: 300px;
+      background: #b57b56;
+      bottom: -60px;
+      right: -40px;
+    }
+
+    /* Overlays: Password & Floating Whispers */
+    .fullscreen-overlay {
+      position: fixed;
+      inset: 0;
+      background: radial-gradient(circle at center, #260f18 0%, #0f0609 100%);
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+
+    .fullscreen-overlay.hidden {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .lock-card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-border);
+      backdrop-filter: blur(18px);
+      padding: 40px 28px;
+      border-radius: 28px;
+      max-width: 380px;
+      width: 100%;
+      box-shadow: 0 24px 60px rgba(0, 0, 0, 0.65);
+    }
+
+    .lock-icon {
+      font-size: 2.4rem;
+      margin-bottom: 12px;
+      display: inline-block;
+      animation: pulseGlow 3s infinite ease-in-out;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(235, 179, 169, 0.3)); }
+      50% { transform: scale(1.06); filter: drop-shadow(0 0 18px rgba(245, 207, 160, 0.6)); }
+    }
+
+    .input-field, .textarea-field, .select-field {
+      width: 100%;
+      background: rgba(15, 6, 10, 0.65);
+      border: 1px solid var(--card-border);
+      color: var(--text-main);
+      padding: 13px 16px;
+      border-radius: 14px;
+      font-family: inherit;
+      font-size: 0.95rem;
