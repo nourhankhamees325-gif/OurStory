@@ -169,7 +169,6 @@
       cursor: pointer;
     }
 
-    /* Love Counter Banner */
     .counter-banner {
       background: var(--card-bg);
       border: 1px solid rgba(235, 179, 169, 0.25);
@@ -256,7 +255,6 @@
     .delete-btn { background: transparent; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.85rem; }
     .delete-btn:hover { color: var(--danger); }
 
-    /* Bucket list specific */
     .bucket-item {
       display: flex; align-items: center; justify-content: space-between;
       background: var(--card-bg); border: 1px solid var(--card-border);
@@ -264,7 +262,6 @@
     }
     .bucket-item.completed span.text { text-decoration: line-through; opacity: 0.6; }
 
-    /* Floating Thinking of You Button */
     .float-pulse-btn {
       position: fixed; bottom: 24px; right: 24px; z-index: 99;
       background: linear-gradient(135deg, #c76574 0%, #9c3d4f 100%);
@@ -278,7 +275,6 @@
     .pulse-overlay {
       position: fixed; inset: 0; background: rgba(19, 9, 13, 0.85); z-index: 9999;
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      animation: fadeIn 0.3s ease;
     }
   </style>
 </head>
@@ -287,10 +283,8 @@
   <div class="ambient-orb orb-1"></div>
   <div class="ambient-orb orb-2"></div>
 
-  <!-- FLOATING PULSE BUTTON -->
   <button type="button" class="float-pulse-btn" onclick="sendLovePulse()" title="Thinking of you!">💓</button>
 
-  <!-- 1. PASSWORD SCREEN -->
   <div id="password-screen" class="fullscreen-overlay">
     <div class="lock-card">
       <div class="lock-icon" style="font-size: 2.4rem; margin-bottom: 12px;">🕯️</div>
@@ -302,7 +296,6 @@
     </div>
   </div>
 
-  <!-- 2. FLOATING WHISPERS SPLASH SCREEN -->
   <div id="whispers-screen" class="fullscreen-overlay hidden" onclick="enterSanctuary()">
     <div id="whispers-container"></div>
     <div class="tap-hint">
@@ -312,7 +305,6 @@
     </div>
   </div>
 
-  <!-- 3. MAIN APPLICATION -->
   <div class="app-container">
     <div class="top-bar">
       <div>
@@ -325,13 +317,12 @@
       </div>
     </div>
 
-    <!-- LOVE COUNTER BANNER -->
     <div class="counter-banner">
       <div style="font-size: 0.85rem; color: var(--rose-gold); letter-spacing: 0.5px;">OUR ETERNAL JOURNEY SINCE MARCH 15, 2026</div>
       <div class="counter-digits" id="love-counter-display">Calculating time...</div>
     </div>
 
-    <!-- PAGE 1: HOME (LOVE LETTER + DIRECTORY LIST) -->
+    <!-- PAGE 1: HOME -->
     <section id="page-home" class="page-section active">
       <div class="love-letter">
         <div style="display: flex; justify-content: space-between; align-items: flex-start;">
@@ -414,7 +405,7 @@
       </div>
 
       <div class="form-box">
-        <input type="text" id="bucket-input" class="input-field" placeholder="Add a dream or place (e.g., Watch sunset in Santorini)..." />
+        <input type="text" id="bucket-input" class="input-field" placeholder="Add a dream or place..." />
         <button type="button" class="btn-primary" onclick="addBucketItem()">Add to Our Bucket List ✨</button>
       </div>
 
@@ -453,14 +444,29 @@
 
       <div class="form-box">
         <textarea id="scrap-caption" class="textarea-field" rows="2" placeholder="Write a random thought or caption..."></textarea>
-        <input type="file" id="scrap-photo" accept="image/*" class="input-field" style="padding: 9px;" />
+        
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <label style="font-size: 0.85rem; color: var(--rose-gold);">📸 Attach a Photo (Optional):</label>
+          <input type="file" id="scrap-photo" accept="image/*" class="input-field" style="padding: 9px;" />
+        </div>
+
+        <div style="display: flex; flex-direction: column; gap: 8px;">
+          <label style="font-size: 0.85rem; color: var(--rose-gold);">🎙️ Record a Voice Note:</label>
+          <div style="display: flex; align-items: center; gap: 10px; flex-wrap: wrap;">
+            <button type="button" id="start-rec-btn" class="btn-secondary" onclick="startRecording()">● Start Recording</button>
+            <button type="button" id="stop-rec-btn" class="btn-secondary" onclick="stopRecording()" style="display: none; border-color: var(--danger); color: var(--danger);">■ Stop</button>
+            <span id="rec-status" style="font-size: 0.82rem; color: var(--text-muted);"></span>
+          </div>
+          <audio id="audio-preview" controls style="display: none; width: 100%; margin-top: 6px;"></audio>
+        </div>
+
         <button type="button" class="btn-primary" id="post-scrap-btn" onclick="postScrapbookItem()">Share Moment 💌</button>
       </div>
 
       <div id="scrapbook-list" class="cards-stack"></div>
     </section>
 
-    <!-- PAGE 5: SETTINGS & NOTIFICATIONS -->
+    <!-- PAGE 5: SETTINGS -->
     <section id="page-settings" class="page-section">
       <div class="section-header">
         <button type="button" class="back-btn" onclick="navigateTo('home')">←</button>
@@ -484,9 +490,9 @@
           To get push notifications on your phone when new memories are added or when he/she thinks of you:
         </p>
         <ol style="font-size: 0.85rem; color: var(--text-main); padding-left: 18px; margin-top: 6px; display: flex; flex-direction: column; gap: 6px;">
-          <li>Download the free app <b>"ntfy"</b> from Google Play or App Store.</li>
+          <li>Download the free app <b>"ntfy"</b> from Google Play or App Store on <b>both devices</b>.</li>
           <li>Open the app and subscribe to topic name: <code style="background: rgba(235,179,169,0.2); padding: 2px 6px; border-radius: 4px; color: var(--candle-glow);">our-story-1532026</code></li>
-          <li>Now you're all set! Instant alerts will ring on your phone automatically.</li>
+          <li>Now instant alerts will ring on your phone automatically when anything is added!</li>
         </ol>
       </div>
     </section>
@@ -496,11 +502,10 @@
     const DB_BASE = "https://our-story-59493-default-rtdb.firebaseio.com/our_story_sanctuary";
     let cachedData = { chapters: {}, special_memories: {}, scrapbook: {}, bucket: {} };
 
-    // Push notification trigger via ntfy.sh (Free & Instant)
     function sendPushAlert(title, message) {
       fetch("https://ntfy.sh/our-story-1532026", {
         method: "POST",
-        body: JSON.stringify({ title: title, message: message, priority: 5, tags: ["heart", "sparkles"] })
+        body: title + "\n" + message
       }).catch(e => console.log(e));
     }
 
@@ -527,15 +532,6 @@
       await fetchCloudData();
     }
 
-    async function putToCloud(path, payload) {
-      await fetch(`${DB_BASE}/${path}.json`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload)
-      });
-      await fetchCloudData();
-    }
-
     async function deleteFromCloud(path) {
       if (confirm("Remove this entry?")) {
         await fetch(`${DB_BASE}/${path}.json`, { method: "DELETE" });
@@ -545,7 +541,6 @@
 
     setInterval(fetchCloudData, 5000);
 
-    // Identity & Passcode
     const SECRET_PASS = "1532026";
     let currentIdentity = localStorage.getItem("our_story_identity") || "Her";
 
@@ -574,7 +569,6 @@
     }
     document.getElementById("pass-input").addEventListener("keypress", (e) => { if(e.key === "Enter") checkPassword(); });
 
-    // Whispers
     const whispersList = [
       "You are my favorite place to be ✨",
       "Every love story is beautiful, but ours is my favorite 🌹",
@@ -603,7 +597,6 @@
       window.scrollTo({ top: 0, behavior: "smooth" });
     }
 
-    // Love Counter (Since March 15, 2026)
     function updateLoveCounter() {
       const start = new Date("2026-03-15T00:00:00");
       const now = new Date();
@@ -614,25 +607,24 @@
       }
       const days = Math.floor(diff / (1000 * 60 * 60 * 24));
       const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const mins = Math.floor((diff / 1000 * 60) % 60);
+      const mins = Math.floor((diff / (1000 * 60 * 60)) % 60);
       const secs = Math.floor((diff / 1000) % 60);
       document.getElementById("love-counter-display").textContent = `${days} Days • ${hours}h ${mins}m ${secs}s`;
     }
     setInterval(updateLoveCounter, 1000);
 
-    // Thinking of You Pulse
     function sendLovePulse() {
       sendPushAlert("💓 Thinking of You!", `${currentIdentity} is thinking of you right now! ✨`);
       const div = document.createElement("div");
       div.className = "pulse-overlay";
       div.innerHTML = `
-        <div style="font-size: 5rem; animation: pulseGlow 1.5s infinite;">💖</div>
+        <div style="font-size: 5rem;">💖</div>
         <h2 class="serif" style="color: var(--rose-gold); font-size: 2rem; margin-top: 16px;">Love Pulse Sent!</h2>
         <p style="color: var(--candle-glow); font-size: 0.95rem; margin-top: 6px;">An instant notification was dispatched to your love.</p>
       `;
       div.onclick = () => div.remove();
       document.body.appendChild(div);
-      setTimeout(() => div.remove(), 3500);
+      setTimeout(() => div.remove(), 3000);
     }
 
     function renderAll() {
@@ -642,7 +634,6 @@
       renderScrapbook();
     }
 
-    // Chapters
     function toggleAddChapter() {
       const box = document.getElementById("add-chapter-box");
       box.style.display = box.style.display === "none" ? "flex" : "none";
@@ -652,7 +643,7 @@
       const body = document.getElementById("chapter-body-input").value.trim();
       if (!title || !body) return;
       await pushToCloud("chapters", { title, body, author: currentIdentity, timestamp: Date.now() }, 
-        "📖 New Chapter Added!", `${currentIdentity} added a new chapter to our story: "${title}"`);
+        "📖 New Chapter Added!", `${currentIdentity} added a new chapter: "${title}"`);
       document.getElementById("chapter-title-input").value = "";
       document.getElementById("chapter-body-input").value = "";
       toggleAddChapter();
@@ -673,7 +664,6 @@
       `).join("");
     }
 
-    // Bucket List
     async function addBucketItem() {
       const text = document.getElementById("bucket-input").value.trim();
       if(!text) return;
@@ -689,12 +679,12 @@
       const container = document.getElementById("bucket-list-container");
       const data = cachedData.bucket;
       if(!data || Object.keys(data).length === 0) {
-        container.innerHTML = `<p style="color: var(--text-muted); text-align: center; padding: 20px;">No dreams added yet. Add your first destination or goal!</p>`;
+        container.innerHTML = `<p style="color: var(--text-muted); text-align: center; padding: 20px;">No dreams added yet.</p>`;
         return;
       }
       container.innerHTML = Object.entries(data).map(([id, item]) => `
         <div class="bucket-item ${item.completed ? 'completed' : ''}">
-          <div style="display: flex; align-items: center; gap: 12px; cursor: pointer;" onclick="toggleBucket('${id}', ${item.completed})">
+          <div style="display: flex; align-items: center; gap: 12px; cursor: pointer; flex:1;" onclick="toggleBucket('${id}', ${item.completed})">
             <span style="font-size: 1.2rem;">${item.completed ? '✅' : '⬜'}</span>
             <span class="text" style="color: var(--text-main);">${item.text}</span>
           </div>
@@ -703,7 +693,6 @@
       `).join("");
     }
 
-    // Special Memories
     async function addSpecialMemory() {
       const title = document.getElementById("special-title").value.trim();
       const date = document.getElementById("special-date").value;
@@ -718,7 +707,7 @@
       const list = document.getElementById("special-memories-list");
       const data = cachedData.special_memories;
       if (!data) { list.innerHTML = `<p style="color: var(--text-muted); text-align: center;">No memories yet.</p>`; return; }
-      list.innerHTML = Object.entries(data).sort((a,b)=>b[1].timestamp-a[1].timestamp).map(([id, m]) => `
+      list.innerHTML = Object.entries(data).sort((a,b)=>b[1].timestamp-b[1].timestamp).map(([id, m]) => `
         <div class="memory-card">
           <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span class="badge">✨ ${m.date} • By ${m.author}</span><button type="button" class="delete-btn" onclick="deleteItem('special_memories/${id}')">✕</button></div>
           <h3 class="serif" style="font-size: 1.4rem; color: var(--rose-gold);">${m.title}</h3>
@@ -727,11 +716,54 @@
       `).join("");
     }
 
-    // Scrapbook
+    let mediaRecorder;
+    let audioChunks = [];
+    let recordedAudioBase64 = null;
+
+    async function startRecording() {
+      try {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        audioChunks = [];
+        recordedAudioBase64 = null;
+
+        mediaRecorder.ondataavailable = e => { if (e.data.size > 0) audioChunks.push(e.data); };
+        mediaRecorder.onstop = () => {
+          const blob = new Blob(audioChunks, { type: 'audio/webm' });
+          const reader = new FileReader();
+          reader.onloadend = () => {
+            recordedAudioBase64 = reader.result;
+            const preview = document.getElementById("audio-preview");
+            preview.src = recordedAudioBase64;
+            preview.style.display = "block";
+          };
+          reader.readAsDataURL(blob);
+          stream.getTracks().forEach(t => t.stop());
+        };
+
+        mediaRecorder.start();
+        document.getElementById("start-rec-btn").style.display = "none";
+        document.getElementById("stop-rec-btn").style.display = "inline-block";
+        document.getElementById("rec-status").textContent = "🔴 Recording...";
+      } catch (err) {
+        alert("Please allow microphone permissions to record voice notes.");
+      }
+    }
+
+    function stopRecording() {
+      if (mediaRecorder && mediaRecorder.state !== "inactive") {
+        mediaRecorder.stop();
+        document.getElementById("start-rec-btn").style.display = "inline-block";
+        document.getElementById("stop-rec-btn").style.display = "none";
+        document.getElementById("rec-status").textContent = "Voice note ready ✓";
+      }
+    }
+
     async function postScrapbookItem() {
       const caption = document.getElementById("scrap-caption").value.trim();
       const photoFile = document.getElementById("scrap-photo").files[0];
-      if (!caption && !photoFile) return;
+      if (!caption && !photoFile && !recordedAudioBase64) return;
+
       let photoBase64 = null;
       if (photoFile) {
         photoBase64 = await new Promise(res => {
@@ -740,22 +772,36 @@
           r.readAsDataURL(photoFile);
         });
       }
-      await pushToCloud("scrapbook", { caption, photo: photoBase64, author: currentIdentity, timestamp: Date.now() },
-        "📸 New Candid Moment!", `${currentIdentity} shared a new photo/moment!`);
+
+      await pushToCloud("scrapbook", { caption, photo: photoBase64, audio: recordedAudioBase64, author: currentIdentity, timestamp: Date.now() },
+        "📸 New Candid Moment!", `${currentIdentity} shared a new voice/photo moment!`);
+      
       document.getElementById("scrap-caption").value = "";
       document.getElementById("scrap-photo").value = "";
+      recordedAudioBase64 = null;
+      document.getElementById("audio-preview").style.display = "none";
+      document.getElementById("rec-status").textContent = "";
     }
+
     function renderScrapbook() {
       const list = document.getElementById("scrapbook-list");
       const data = cachedData.scrapbook;
       if (!data) { list.innerHTML = `<p style="color: var(--text-muted); text-align: center;">No moments yet.</p>`; return; }
-      list.innerHTML = Object.entries(data).sort((a,b)=>b[1].timestamp-a[1].timestamp).map(([id, item]) => `
+      list.innerHTML = Object.entries(data).sort((a,b)=>b[1].timestamp-b[1].timestamp).map(([id, item]) => `
         <div class="memory-card">
           <div style="display: flex; justify-content: space-between; margin-bottom: 8px;"><span class="badge">${item.author === "Her" ? "🌷 Her" : "🌿 Him"}</span><button type="button" class="delete-btn" onclick="deleteItem('scrapbook/${id}')">✕</button></div>
           ${item.caption ? `<p>${item.caption}</p>` : ""}
           ${item.photo ? `<img src="${item.photo}" style="width:100%; border-radius:12px; margin-top:10px;" />` : ""}
+          ${item.audio ? `<audio controls src="${item.audio}" style="width:100%; margin-top:10px;"></audio>` : ""}
         </div>
       `).join("");
+    }
+
+    async function deleteItem(path) {
+      if(confirm("Remove this entry?")) {
+        await fetch(`${DB_BASE}/${path}.json`, { method: "DELETE" });
+        await fetchCloudData();
+      }
     }
 
     updateIdentityUI();
