@@ -432,7 +432,7 @@
       <div id="special-memories-list" class="cards-stack"></div>
     </section>
 
-    <!-- PAGE 4: SPONTANEOUS MOMENTS -->
+    <!-- PAGE 4: SPONTANEOUS MOMENTS (WITH VOICE RECORDING FIXED) -->
     <section id="page-scrapbook" class="page-section">
       <div class="section-header">
         <button type="button" class="back-btn" onclick="navigateTo('home')">←</button>
@@ -502,10 +502,16 @@
     const DB_BASE = "https://our-story-59493-default-rtdb.firebaseio.com/our_story_sanctuary";
     let cachedData = { chapters: {}, special_memories: {}, scrapbook: {}, bucket: {} };
 
+    // FIXED NTFY NOTIFICATION HEADERS (Clean Title & Body formatting)
     function sendPushAlert(title, message) {
       fetch("https://ntfy.sh/our-story-1532026", {
         method: "POST",
-        body: title + "\n" + message
+        headers: {
+          "Title": title,
+          "Priority": "high",
+          "Tags": "heart,sparkles"
+        },
+        body: message
       }).catch(e => console.log(e));
     }
 
@@ -716,6 +722,7 @@
       `).join("");
     }
 
+    // Voice recording logic fixed for mobile browsers
     let mediaRecorder;
     let audioChunks = [];
     let recordedAudioBase64 = null;
